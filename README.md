@@ -2,8 +2,9 @@
 
 This is an assignment for an interview process of Caliber.
 
-[Instruction](#instruction)
-[Solution](#solution)
+- [Instruction](#instruction)
+
+- [Solution](#solution)
 
 ## Instruction
 
