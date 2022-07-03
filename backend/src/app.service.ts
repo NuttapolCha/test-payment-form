@@ -44,8 +44,24 @@ export class AppService {
   }
 
   // findCoupon find coupon in our DB.
-  async findCoupon(code: string): Promise<Coupon> {
+  private async findCoupon(code: string): Promise<Coupon> {
+    if (!code) {
+      throw new Error('invalid findCoupon parameter input');
+    }
     return await this.couponRepository.findOneBy({ code });
+  }
+
+  async getDiscount(code: string): Promise<number> {
+    try {
+      const coupon = await this.findCoupon(code);
+      if (!coupon || !coupon.isActive) {
+        throw new Error('customer has entered an invalid coupon code');
+      }
+      return coupon.discount;
+    } catch (err) {
+      console.log('error find coupon:', err);
+      return -1;
+    }
   }
 
   // submitForm converts customer check out input form

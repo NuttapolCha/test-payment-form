@@ -1,4 +1,12 @@
-import { Body, Controller, Header, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { CommonResponse, SubmitFormParams } from './dto';
 import { Response } from 'express';
@@ -6,6 +14,23 @@ import { Response } from 'express';
 @Controller('api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Get('coupons/:code')
+  @Header('Content-type', 'application/json')
+  async findCoupon(@Param() params, @Res() res: Response) {
+    const resp = new CommonResponse();
+    const discount = await this.appService.getDiscount(params.code);
+    if (discount < 0) {
+      resp.code = 1;
+      resp.message = 'coupon not found or it is unavailable';
+      res.status(404);
+    } else {
+      resp.code = 0;
+      resp.message = 'success';
+      resp.data = { discount };
+    }
+    res.json(resp);
+  }
 
   @Post('submitForm')
   @Header('Content-type', 'application/json')
