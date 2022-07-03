@@ -83,5 +83,5 @@ make stop-pg
 
 ### Limitation
 
-1. No duplicate coupons validation.
-2. There is no product tables. We just assume that users were buying only *Annual Subscription*.
+1. No multiple usage of coupons validation.
+2. There is no product table. We just assume that users were buying only *Annual Subscription*.
