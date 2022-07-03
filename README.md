@@ -58,19 +58,19 @@ This service can be simply started by the following steps.
 1. Start postgreSQL docker
 
 ```sh
-$make start-pg
+make start-pg
 ```
 
 2. Initialize database and schema
 
 ```sh
-$make reset-pg
+make reset-pg
 ```
 
 3. Run the service locally
 
 ```sh
-$make dev
+make dev
 ```
 
 From now on, the service should be started.
@@ -78,7 +78,7 @@ From now on, the service should be started.
 Once you have stopped the service, you may also stop the postgreSQL docker by simply run
 
 ```sh
-$make stop-pg
+make stop-pg
 ```
 
 ### Limitation
