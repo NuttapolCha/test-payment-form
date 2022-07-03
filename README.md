@@ -1,6 +1,9 @@
 # test-payment-form
 
-This is an assignment for an interview process of Caliber
+This is an assignment for an interview process of Caliber.
+
+[Instruction](#instruction)
+[Solution](#solution)
 
 ## Instruction
 
@@ -49,20 +52,35 @@ The user will receive an E-Receipt to his/her email with the payment date and th
 
 ### Getting Start
 
-Run the `PostgreSQL` database locally.
+This service can be simply started by the following steps.
 
+1. Start postgreSQL docker
 
 ```sh
-$./backend/scripts/start_pg.sh; ./backend/scripts/reset_pg.sh
+$make start-pg
 ```
 
-And then tart the development service.
+2. Initialize database and schema
 
 ```sh
-$npm run start
+$make reset-pg
+```
+
+3. Run the service locally
+
+```sh
+$make dev
+```
+
+From now on, the service should be started.
+
+Once you have stopped the service, you may also stop the postgreSQL docker by simply run
+
+```sh
+$make stop-pg
 ```
 
 ### Limitation
 
 1. No duplicate coupons validation.
-2. There is no product tables. We just assume that users were buying only 'Annual Subscription'.
+2. There is no product tables. We just assume that users were buying only *Annual Subscription*.
