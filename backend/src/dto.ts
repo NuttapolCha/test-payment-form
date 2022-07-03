@@ -7,7 +7,7 @@ export class SubmitFormParams {
   couponCode: string;
 
   // optional
-  recommonderEmail: string;
+  recommenderEmail: string;
 }
 
 export class CommonResponse {

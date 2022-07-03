@@ -1,7 +1,10 @@
-import { Coupon } from 'src/entities/coupon.entity';
-import { Customer } from 'src/entities/customer.entity';
-import { Order } from 'src/entities/order.entity';
+import { MailerOptions } from '@nestjs-modules/mailer';
+import { Coupon } from 'src/db/sql/entities/coupon.entity';
+import { Customer } from 'src/db/sql/entities/customer.entity';
+import { Order } from 'src/db/sql/entities/order.entity';
 import { DataSourceOptions } from 'typeorm';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 const dbConfig = <DataSourceOptions>{
   // TODO: read this hard code from .env instead.
@@ -18,8 +21,30 @@ const dbConfig = <DataSourceOptions>{
   schema: 'test_payment_form',
 };
 
+const mailConfig = <MailerOptions>{
+  transport: {
+    host: 'smtp.example.com',
+    secure: false,
+    auth: {
+      user: 'user@example.com',
+      pass: 'topsecret',
+    },
+  },
+  defaults: {
+    from: '"No Reply" <noreply@example.com>',
+  },
+  template: {
+    dir: join(__dirname, '../mail/templates'),
+    adapter: new HandlebarsAdapter(),
+    options: {
+      strict: true,
+    },
+  },
+};
+
 const config = {
   dbConfig,
+  mailConfig,
 };
 
 export default config;

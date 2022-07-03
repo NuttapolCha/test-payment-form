@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SubmitFormParams } from './dto';
-import { Coupon } from './entities/coupon.entity';
-import { Customer } from './entities/customer.entity';
-import { Order } from './entities/order.entity';
+import { Coupon } from './db/sql/entities/coupon.entity';
+import { Customer } from './db/sql/entities/customer.entity';
+import { Order } from './db/sql/entities/order.entity';
 import { validate } from './utils/validate';
+import { MailService } from './mail/mail.service';
+import { SendEmailParams } from './mail/email_params';
 
 @Injectable()
 export class AppService {
@@ -18,6 +20,8 @@ export class AppService {
 
     @InjectRepository(Coupon)
     private couponRepository: Repository<Coupon>,
+
+    private mailService: MailService,
   ) {}
 
   // getCustomer get customer from DB if exist otherwise will create a new one.
@@ -41,6 +45,11 @@ export class AppService {
 
   private async createOrder(order: Order): Promise<Order> {
     return await this.orderRepository.save(order);
+  }
+
+  private async sendEReceiptEmail(params: SendEmailParams): Promise<boolean> {
+    await this.mailService.sendEReceipt(params);
+    return true;
   }
 
   // findCoupon find coupon in our DB.
@@ -72,8 +81,8 @@ export class AppService {
       return 'invalid email input';
     }
     if (
-      params.recommonderEmail &&
-      !validate.emailIsValid(params.recommonderEmail)
+      params.recommenderEmail &&
+      !validate.emailIsValid(params.recommenderEmail)
     ) {
       return 'invalid recommender email input';
     }
@@ -105,7 +114,7 @@ export class AppService {
     }
 
     // Create a new order record.
-    const order = new Order();
+    let order = new Order();
     try {
       order.customer = new Customer();
       order.customer.id = customer.id;
@@ -113,12 +122,27 @@ export class AppService {
       order.coupon = new Coupon();
       order.coupon.code = coupon ? coupon.code : '';
 
-      order.recommenderEmail = params.recommonderEmail;
+      order.recommenderEmail = params.recommenderEmail;
 
-      await this.createOrder(order);
+      order = await this.createOrder(order);
     } catch (err) {
       console.log('create order error:', err);
       return 'create order error';
+    }
+
+    // Send E-Receipt via email
+    try {
+      await this.sendEReceiptEmail({
+        to: params.email,
+        name: params.firstName + ' ' + params.lastName,
+        date: order.createdDate,
+        amount: 5000 - coupon.discount,
+        discount: coupon.discount,
+        recommenderEmail: params.recommenderEmail,
+      });
+    } catch (err) {
+      console.log('send email error:', err);
+      return 'send email error';
     }
 
     // if everything okay, return empty string.
