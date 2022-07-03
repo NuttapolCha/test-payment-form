@@ -9,11 +9,14 @@ export class AppController {
 
   @Post('submitForm')
   @Header('Content-type', 'application/json')
-  submitForm(@Body() params: SubmitFormParams, @Res() res: Response) {
-    const errMsg = this.appService.submitForm(params);
+  async submitForm(@Body() params: SubmitFormParams, @Res() res: Response) {
+    const errMsg = await this.appService.submitForm(params);
     const resp = new CommonResponse();
-    resp.code = errMsg ? 0 : 1;
+    resp.code = errMsg ? 1 : 0;
     resp.message = errMsg ? errMsg : 'success';
+    if (resp.code == 1) {
+      res.status(500);
+    }
     res.json(resp);
   }
 }

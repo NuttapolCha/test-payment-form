@@ -1,75 +1,68 @@
-# Backend
+# test-payment-form
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+This is an assignment for an interview process of Caliber
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Instruction
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Deliverables: Source Code on Github (or other Git hosting)
 
-## Description
+### Deadline: 8 July 2022 at 18:00 (1 week)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Requirements
 
-## Installation
+Develop Web App for Ecommerce & E-Receipt Feature.
 
-```bash
-$ npm install
+Just mocking that the user buys the product, doesn’t need to connect to the payment gateway to charge the user.
+
+User need to submit these information to checkout;
+
+- Firstname
+- Last Name
+- Email
+- Phone Number
+- Coupon Code
+- Credit Card Info
+- Credit Card Number
+- Expire Date
+- CVV
+
+The App should have data validation if user input the form incorrectly.
+
+The user submitted data will have to stored in DB (everything except Credit Card Info).
+
+The user will receive an E-Receipt to his/her email with the payment date and the data stored in the DB.
+
+[Reference](https://checkout.cariber.co/add-sku-634cac96-9b75-41d0-8605-f902cde1566f/?cpc=career92)
+
+### Tech Stack
+
+- Next.js (Frontend React.js Framework) for frontend
+- Nest.js (Backend TS Framework) for backend
+- PostgreSQL for Database
+
+## Solution
+
+### Prerequisite
+
+- node
+- docker
+
+### Getting Start
+
+Run the `PostgreSQL` database locally.
+
+
+```sh
+$./backend/scripts/start_pg.sh; ./backend/scripts/reset_pg.sh
 ```
 
-## Running the app
+And then tart the development service.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+$npm run start
 ```
 
-## Test
+### Limitation
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+1. No duplicate coupons validation.
+2. There is no product tables. We just assume that users were buying only 'Annual Subscription'.
