@@ -1,6 +1,13 @@
 export class SubmitFormParams {
-  name: string;
+  // required
+  firstName: string;
+  lastName: string;
   email: string;
+  phoneNo: string;
+  couponCode: string;
+
+  // optional
+  recommonderEmail: string;
 }
 
 export class CommonResponse {
