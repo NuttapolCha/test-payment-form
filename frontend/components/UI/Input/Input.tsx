@@ -9,7 +9,7 @@ declare interface InputProps {
   isRequired: boolean;
   isValid: boolean | null;
   inputType: any;
-  onInputChangeHandler: () => void;
+  onInputChangeHandler: (e: any) => void;
 }
 
 const Input = (props: InputProps) => {
