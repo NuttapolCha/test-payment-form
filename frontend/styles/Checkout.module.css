@@ -1,0 +1,27 @@
+.container {
+    padding: 0 2rem;
+    font-family: "sans-serif";
+}
+
+.title {
+    text-align: center;
+    margin: 4rem;
+    line-height: 1.15;
+    font-size: 4rem;
+}
+
+.billing-info {
+    display: flex;
+}
+
+.billing-container {
+    width: 50%;
+    margin-right: 1rem;
+    left: 0;
+}
+
+.order-container {
+    width: 50%;
+    margin-left: 1rem;
+    right: 0;
+}

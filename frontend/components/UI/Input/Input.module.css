@@ -1,0 +1,27 @@
+.control {
+    margin-bottom: 1rem;
+    flex-direction: column;
+}
+
+.control label,
+.control input {
+    display: block;
+}
+
+.control input {
+    margin-top: .25rem;
+    margin-right: 4rem;
+    width: 100%;
+    height: 3rem;
+    background-color: white;
+    border: none;
+    padding: .5rem;
+}
+
+.required {
+    color: red;
+}
+
+.control.invalid input {
+    border-color: red;
+}

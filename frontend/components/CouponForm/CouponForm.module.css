@@ -1,0 +1,21 @@
+.container {
+    margin-bottom: 2rem;
+}
+
+.coupon-label {
+    margin-bottom: 1rem;
+}
+
+.coupon-form {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.coupon-form input {
+    width: 70%;
+    height: 3rem;
+    padding: .5rem;
+    background-color: white;
+    border: none;
+}
