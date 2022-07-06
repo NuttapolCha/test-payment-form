@@ -77,7 +77,7 @@ const CheckoutPage: NextPage = () => {
           <OrderInfo
             selectedItems={items}
             couponCode={couponInfo.couponCode}
-            discount={1600}
+            discount={couponInfo.discount}
             setCouponInfo={setCouponInfo}
           />
           <PaymentForm />
