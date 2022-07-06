@@ -131,19 +131,19 @@ export class AppService {
     }
 
     // Send E-Receipt via email
-    try {
-      await this.sendEReceiptEmail({
-        to: params.email,
-        name: params.firstName + ' ' + params.lastName,
-        date: order.createdDate,
-        amount: 5000 - coupon.discount,
-        discount: coupon.discount,
-        recommenderEmail: params.recommenderEmail,
-      });
-    } catch (err) {
-      console.log('send email error:', err);
-      return 'send email error';
-    }
+    // try {
+    //   await this.sendEReceiptEmail({
+    //     to: params.email,
+    //     name: params.firstName + ' ' + params.lastName,
+    //     date: order.createdDate,
+    //     amount: 5000 - coupon.discount,
+    //     discount: coupon.discount,
+    //     recommenderEmail: params.recommenderEmail,
+    //   });
+    // } catch (err) {
+    //   console.log('send email error:', err);
+    //   return 'send email error';
+    // }
 
     // if everything okay, return empty string.
     return '';
