@@ -11,30 +11,30 @@ export interface CouponInfo {
 
 const CouponForm = (props: any) => {
   const { couponInfo, setCouponInfo } = props;
+  const [inputCouponCode, setInputCouponCode] = useState<string>(couponInfo.couponCode);
 
-  const useCouponHandler = async () => {
+  const useCouponHandler = async (e: Event) => {
     // fetch the Backend
+    e.preventDefault();
     try {
-    const discount = await APIs.getDiscount(couponInfo.couponCode)
-    setCouponInfo({
-      couponCode: couponInfo.couponCode,
-      discount: discount,
-    })
-    } catch(err) {
-      alert(`could not get coupon information at this time because ${err}`)
-      console.log(err)
+      const discount = await APIs.getDiscount(inputCouponCode);
+      console.log(discount);
+      setCouponInfo({
+        couponCode: inputCouponCode,
+        discount: discount,
+      });
+    } catch (err) {
+      alert(`could not get coupon information at this time because ${err}`);
+      console.log(err);
       setCouponInfo({
         couponCode: "",
         discount: 0,
-      })
+      });
     }
   };
 
   const onCouponCodeChangeHandler = (e: any) => {
-    setCouponInfo({
-      ...couponInfo,
-      couponCode: e.target.value,
-    });
+    setInputCouponCode(e.target.value)
   };
 
   return (
@@ -50,7 +50,7 @@ const CouponForm = (props: any) => {
           name="coupon-input"
           type="text"
           placeholder="coupon code"
-          value={couponInfo.couponCode}
+          value={inputCouponCode}
           onChange={onCouponCodeChangeHandler}
         />
         <Button

@@ -4,8 +4,11 @@ start-pg:
 reset-pg:
 	./backend/scripts/reset_pg.sh
 
-dev:
+be:
 	( cd ./backend ; npm run start)
+
+fe:
+	( cd ./frontend ; yarn dev -p 3001)
 
 stop-pg:
 	docker stop test-payment-form-postgres

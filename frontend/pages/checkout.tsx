@@ -5,7 +5,9 @@ import styles from "../styles/Checkout.module.css";
 import CouponForm, { CouponInfo } from "../components/CouponForm/CouponForm";
 import BillingForm from "../components/BillingForm/BillingForm";
 import OrderInfo from "../components/OrderInfo/OrderInfo";
-import PaymentForm from "../components/PaymentForm/PaymentForm";
+import PaymentForm, {
+  CreditCardInfo,
+} from "../components/PaymentForm/PaymentForm";
 import Button from "../components/UI/Button/Button";
 
 // CheckoutFormParams is what we will POST to backend
@@ -35,6 +37,7 @@ interface BuyerInfo {
 const CheckoutPage: NextPage = () => {
   const items = [
     {
+      id: "A001",
       name: "Annual Subscription",
       amount: 1,
       price: 5000,
@@ -54,11 +57,32 @@ const CheckoutPage: NextPage = () => {
     discount: 1600,
   });
 
-  const onPurchaseHandler = (e: any) => {
-    console.log(`Thanks for purchase! ${buyerInfo}`)
-  }
+  const [creditCardInfo, setCreditCardInfo] = useState<CreditCardInfo>({
+    creditCardNo: "",
+    expireDate: null,
+    cvc: "",
+  });
 
-  console.log(buyerInfo);
+  const onPurchaseHandler = (e: any) => {
+    const checkoutParams = {
+      // buyer information
+      firstName: buyerInfo.firstName,
+      lastName: buyerInfo.lastName,
+      email: buyerInfo.email,
+      phoneNo: buyerInfo.phoneNo,
+      couponCode: couponInfo.couponCode,
+      recommenderEmail: buyerInfo.recommenderEmail,
+
+      // payment related
+      creditCardNumber: creditCardInfo.creditCardNo,
+      creditCardExpireDate: creditCardInfo.expireDate,
+      creditCardCVV: creditCardInfo.cvc,
+    };
+
+    console.log(`Thanks for purchase! ${JSON.stringify(checkoutParams)}`);
+
+    // TODO: POST request to backend
+  };
 
   return (
     <div className={styles.container}>
@@ -80,10 +104,17 @@ const CheckoutPage: NextPage = () => {
             discount={couponInfo.discount}
             setCouponInfo={setCouponInfo}
           />
-          <PaymentForm />
+          <PaymentForm
+            creditCardInfo={creditCardInfo}
+            setCreditCardInfo={setCreditCardInfo}
+          />
           <div className={styles["purchase-btn"]}>
             <h3>{`Once you click 'Purchase', please do not refresh or exit the browser.`}</h3>
-            <Button btnType="submit" label="Purchase" onClickHandler={onPurchaseHandler}/>
+            <Button
+              btnType="submit"
+              label="Purchase"
+              onClickHandler={onPurchaseHandler}
+            />
           </div>
         </div>
       </div>
