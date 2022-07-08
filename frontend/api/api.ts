@@ -1,7 +1,9 @@
-import { getDiscount } from './get_discount';
+import { getDiscount } from "./get_discount";
+import { submitCheckoutForm } from "./submit_checkout_form";
 
 const APIs = {
-    getDiscount,
-}
+  getDiscount,
+  submitCheckoutForm,
+};
 
-export default APIs
+export default APIs;

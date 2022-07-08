@@ -9,22 +9,8 @@ import PaymentForm, {
   CreditCardInfo,
 } from "../components/PaymentForm/PaymentForm";
 import Button from "../components/UI/Button/Button";
-
-// CheckoutFormParams is what we will POST to backend
-interface CheckoutFormParams {
-  // buyer information
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNo: string;
-  couponCode: string;
-  recommenderEmail: string;
-
-  // payment related
-  creditCardNumber: string;
-  creditCardExpireDate: Date;
-  creditCardCVV: string;
-}
+import { CheckoutFormParams } from "../api/submit_checkout_form";
+import APIs from "../api/api";
 
 interface BuyerInfo {
   firstName: string;
@@ -63,8 +49,8 @@ const CheckoutPage: NextPage = () => {
     cvc: "",
   });
 
-  const onPurchaseHandler = (e: any) => {
-    const checkoutParams = {
+  const onPurchaseHandler = async (e: any) => {
+    const checkoutParams: CheckoutFormParams = {
       // buyer information
       firstName: buyerInfo.firstName,
       lastName: buyerInfo.lastName,
@@ -82,6 +68,16 @@ const CheckoutPage: NextPage = () => {
     console.log(`Thanks for purchase! ${JSON.stringify(checkoutParams)}`);
 
     // TODO: POST request to backend
+    try {
+      const errMsg = await APIs.submitCheckoutForm(checkoutParams);
+      if (errMsg != "") {
+        throw new Error(errMsg);
+      }
+    } catch (err) {
+      alert(`could not purchase at this time because: ${err}`);
+      return;
+    }
+    alert("successfully purchased");
   };
 
   return (

@@ -46,42 +46,58 @@ The user will receive an E-Receipt to his/her email with the payment date and th
 
 ## Solution
 
-### Prerequisite
+### Frontend
+
+Frontend can be simply started by run the following command at project root.
+
+```sh
+make fe
+```
+
+### Backend
+
+#### Prerequisite
 
 - node
 - docker
 
-### Getting Start
+#### Setup DB and Starting Server
 
-This service can be simply started by the following steps.
+This service use postgres docker for out DB.
 
-1. Start postgreSQL docker
+Start postgreSQL docker
 
 ```sh
 make start-pg
 ```
 
-2. Initialize database and schema
+Initialize database and schema
 
 ```sh
 make reset-pg
 ```
 
-3. Run the service locally
+At this point, your database should be inited and the next step is starting HTTP API server.
+
 
 ```sh
-make dev
+make be
 ```
 
-From now on, the service should be started.
+Congratulation! you just started your backend server.
 
-Once you have stopped the service, you may also stop the postgreSQL docker by simply run
+When you have stopped the server by `cmd+C`, you may also stop the postgreSQL docker by simply run
 
 ```sh
 make stop-pg
 ```
 
-### Limitation
+## TODO
 
-1. No multiple usage of coupons validation.
-2. There is no product table. We just assume that users were buying only *Annual Subscription*.
+This project **is not completed yet** because it still lacks features referred to the requirements.
+
+1. No acutal Emails were sent to the users. We still need to integrate our server with 3rd API such as gmail.
+
+2. No form validation at Frontend. We also have to implement the form input validation.
+
+3. No mocking payment service was implemented. We just receives the credit card information and do nothing.
