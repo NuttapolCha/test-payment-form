@@ -8,6 +8,11 @@ export class SubmitFormParams {
 
   // optional
   recommenderEmail: string;
+
+  // payment related
+  creditCardNumber: string;
+  creditCardExpireDate: Date;
+  creditCardCVV: string;
 }
 
 export class CommonResponse {

@@ -17,6 +17,7 @@ export class AppController {
 
   @Get('coupons/:code')
   @Header('Content-type', 'application/json')
+  @Header('Access-Control-Allow-Origin', '*')
   async findCoupon(@Param() params, @Res() res: Response) {
     const resp = new CommonResponse();
     const discount = await this.appService.getDiscount(params.code);
@@ -34,7 +35,9 @@ export class AppController {
 
   @Post('submitForm')
   @Header('Content-type', 'application/json')
+  @Header('Access-Control-Allow-Origin', '*')
   async submitForm(@Body() params: SubmitFormParams, @Res() res: Response) {
+    console.log(`incoming request body => ${JSON.stringify(params)}`);
     const errMsg = await this.appService.submitForm(params);
     const resp = new CommonResponse();
     resp.code = errMsg ? 1 : 0;
